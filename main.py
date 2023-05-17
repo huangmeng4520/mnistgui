@@ -9,6 +9,7 @@
 """ for user to control"""
 # https://www.bilibili.com/video/BV1kK4y1D7vP/?spm_id_from=333.880.my_history.page.click&vd_source=a577598d366ab0e1265dfb0c21fdcc3d
 import sys
+import datetime
 import pickle
 import gzip
 import torch
@@ -160,7 +161,11 @@ class Controller(Frame):
         print("======")
         # 数据类型为unit16(即(CV_16U)的图像可以保存为PNG、JPEG、TIFF格式文件。
         # 数据类型为float32的图像可以保存成PFM、TIFF、OpenEXR、和Radiance HDR格式文件。
-        cv.imwrite("hm.TIFF", self.mnistArray.reshape(28, 28, 1))
+        # mnist图片是原始数据做了归一处理，需要*255，然后转化为uint8，才能保存位png、jpeg,否在只能保存了tiff
+        tmp=self.mnistArray*255
+        savedata=tmp.reshape(28, 28).astype(np.uint8)
+        filename = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        cv.imwrite("./getimg/"+filename+".png", savedata)
         ###########################
         # ##########调试开始###########
         # img =Image.open('4.png')
@@ -191,9 +196,10 @@ class Controller(Frame):
         self.imgArr = np.array(self.handWriting)
         self.imgArr = cv.resize(self.imgArr, (28, 28))
         global count
-        cv.imwrite(str(count) + ".jpg", self.imgArr)
+        filename = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        cv.imwrite("./saveimg/"+filename + ".jpg", self.imgArr)
         count = count + 1
-        cv.imshow(str(count) + ".jpg", self.imgArr)
+        cv.imshow(filename + ".jpg", self.imgArr)
         print("file saved")
 
 
