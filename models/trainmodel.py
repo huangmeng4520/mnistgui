@@ -198,5 +198,5 @@ def train_data(count=6):
 
 
 if __name__ == '__main__':
-    # examples()
-    train_data(100)
+    examples()
+    # train_data(100)
