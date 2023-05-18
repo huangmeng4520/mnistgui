@@ -16,4 +16,3 @@ Test set: Avg. loss: 0.0285, Accuracy: 9911/10000 (99%)
 
 getimg是从mnist数据集提取数据，会自动根据日期存储到当前目录
 saveimg是从手绘数据点击“保存”，会自动根据日期存储到当前目录
-
