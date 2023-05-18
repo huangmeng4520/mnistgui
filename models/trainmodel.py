@@ -35,6 +35,7 @@ train_loader = torch.utils.data.DataLoader(
                                        mean=(0.1307,), std=(0.3081,))
                                ])),
     batch_size=batch_size_train, shuffle=True)
+# print(type(train_loader))
 #shuffle=True,在每个epoch开始的时候，对数据进行重新打乱
 # 测试数据集
 test_loader = torch.utils.data.DataLoader(
@@ -48,7 +49,16 @@ test_loader = torch.utils.data.DataLoader(
 
 
 def examples():
+    print("train_loader类型",type(train_loader))
     examples = enumerate(train_loader)
+    print("enumerate",type(examples))
+    # for index,value in examples:
+    #     print(index)
+    #     print(type(value))
+    #     print(len(value))
+    #     print(value[0].shape)#64批次训练数据矩阵
+    #     print(value[0][0][0])
+    #     print(value[1].shape)#64批次图片对应的结果集
     batch_idx, (example_data, example_targets) = next(examples)
     # (example_data, example_targets) = list(examples)[0]
     print(example_data)
@@ -57,7 +67,7 @@ def examples():
     print(example_targets)
     print(example_data.shape)
     # 数据集第一个图片数据
-    transforms.ToPILImage()(example_data[63][0]).save('./testimg/test.png')
+    transforms.ToPILImage()(example_data[63][0]).save('./test.png')
     print(example_data[0][0])
     print(example_targets[0])
 
@@ -161,7 +171,7 @@ def train_data(count=6):
 
     # ----------------------------------------------------------- #
 
-    continued_network = network.Net()
+    continued_network = netmodel.Net()
     continued_optimizer = optim.SGD(network.parameters(), lr=learning_rate, momentum=momentum)
 
     network_state_dict = torch.load('../model.pth')
